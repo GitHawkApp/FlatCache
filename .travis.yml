@@ -1,0 +1,4 @@
+language: swift
+xcode_project: FlatCache.xcodeproj
+xcode_scheme: FlatCacheTests/
+osx_image: xcode9.3
