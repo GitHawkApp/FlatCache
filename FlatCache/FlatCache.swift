@@ -47,6 +47,7 @@ public final class FlatCache {
     public enum Update {
         case item(Any)
         case list([Any])
+        case removeItem(Cachable)
     }
 
     private var storage: [FlatCacheKey: Any] = [:]
@@ -135,6 +136,26 @@ public final class FlatCache {
         let key = FlatCacheKey(typeName: T.typeName, id: id)
         return storage[key] as? T
     }
+    
+    /// Removes an item from cache.
+    /// - Important: This method must be called from the main thread.
+    /// - Parameter id: The key corresponding to the cached item.
+    /// - Returns: An optional `Cachable` object if it exists.
+    /// - Throws: Throws a `FlatCacheError` if no value could be found for the given key.
+    public func remove<T: Cachable>(key id: String) throws -> T? {
+        assert(Thread.isMainThread)
 
+        let key = FlatCacheKey(typeName: T.typeName, id: id)
+        guard let val = storage[key] as? Cachable else {
+            throw FlatCacheError.noValueForKey(id)
+        }
+        storage.removeValue(forKey: key)
+        enumerateListeners(key: key) { listener in
+            listener.flatCacheDidUpdate(cache: self, update: .removeItem(val))
+            if let index = listeners.index(forKey: key) {
+                listeners.remove(at: index)
+            }
+        }
+        return val as? T
+    }
 }
-

@@ -8,7 +8,7 @@
 
 import XCTest
 
-struct CacheModel: Cachable {
+struct CacheModel: Cachable, Equatable {
     let id: String
     let value: String
 }
@@ -21,6 +21,10 @@ class CacheModelListener: FlatCacheListener {
         switch update {
         case .item(let item): receivedItemQueue.append(item as! CacheModel)
         case .list(let list): receivedListQueue.append(list as! [CacheModel])
+        case .removeItem(let item):
+            if let item = item as? CacheModel {
+              receivedItemQueue = receivedItemQueue.filter {$0 != item}
+            }
         }
     }
 }
@@ -118,4 +122,44 @@ class FlatCacheTests: XCTestCase {
         XCTAssertEqual(l2.receivedItemQueue.last?.value, "bar")
     }
     
+    func test_removeResult_UsingRawKeyString() {
+        let cache = FlatCache()
+        let model = CacheModel(id: "hello", value: "world")
+        cache.set(value: model)
+        XCTAssertNotNil(cache.get(id: "hello") as CacheModel?)
+        do {
+            let val = try cache.remove(key: "hello") as CacheModel?
+            XCTAssertNotNil(val)
+        } catch FlatCacheError.noValueForKey(let key) {
+            XCTAssert(false, "No value found for key: - \(key)")
+        } catch {
+            XCTAssert(true, "\(error)")
+        }
+    }
+    
+    func test_RemoveResult_withListener() {
+        let cache = FlatCache()
+        let m1 = CacheModel(id: "foo", value: "bar")
+        let m2 = CacheModel(id: "bar", value: "foo")
+        let m3 = CacheModel(id: "hello", value: "world")
+        let l1 = CacheModelListener()
+        let l2 = CacheModelListener()
+        cache.add(listener: l1, value: m1)
+        cache.add(listener: l2, value: m1)
+        cache.add(listener: l2, value: m2)
+        cache.add(listener: l2, value: m3)
+        cache.set(value: m1)
+        cache.set(value: m2)
+        cache.set(value: m3)
+        XCTAssertEqual(l1.receivedItemQueue.count, 1)
+        do {
+            let cachedVal = try cache.remove(key: m1.id) as CacheModel?
+            let _ =  try cache.remove(key: m3.id) as CacheModel?
+            XCTAssertEqual(m1.value, cachedVal?.value)
+            XCTAssertEqual(l1.receivedItemQueue.count, 0)
+            XCTAssertEqual(l2.receivedItemQueue.count, 1)
+        } catch {
+            XCTAssert(false, "\(error)")
+        }
+    }
 }

@@ -12,6 +12,8 @@
 		29EEB21A1F9BCE7400AB237B /* FlatCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 29EEB20C1F9BCE7400AB237B /* FlatCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		29EEB2241F9BCED500AB237B /* FlatCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EEB2231F9BCED500AB237B /* FlatCache.swift */; };
 		29EEB2251F9BCED700AB237B /* FlatCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29EEB2231F9BCED500AB237B /* FlatCache.swift */; };
+		845EBA3D20F467D700A7E3F9 /* FlatCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845EBA3C20F467D700A7E3F9 /* FlatCacheError.swift */; };
+		845EBA3E20F467D700A7E3F9 /* FlatCacheError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845EBA3C20F467D700A7E3F9 /* FlatCacheError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +34,7 @@
 		29EEB2171F9BCE7400AB237B /* FlatCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatCacheTests.swift; sourceTree = "<group>"; };
 		29EEB2191F9BCE7400AB237B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29EEB2231F9BCED500AB237B /* FlatCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlatCache.swift; sourceTree = "<group>"; };
+		845EBA3C20F467D700A7E3F9 /* FlatCacheError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatCacheError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +78,7 @@
 			isa = PBXGroup;
 			children = (
 				29EEB2231F9BCED500AB237B /* FlatCache.swift */,
+				845EBA3C20F467D700A7E3F9 /* FlatCacheError.swift */,
 				29EEB20C1F9BCE7400AB237B /* FlatCache.h */,
 				29EEB20D1F9BCE7400AB237B /* Info.plist */,
 			);
@@ -201,6 +205,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				845EBA3D20F467D700A7E3F9 /* FlatCacheError.swift in Sources */,
 				29EEB2241F9BCED500AB237B /* FlatCache.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,6 +216,7 @@
 			files = (
 				29EEB2181F9BCE7400AB237B /* FlatCacheTests.swift in Sources */,
 				29EEB2251F9BCED700AB237B /* FlatCache.swift in Sources */,
+				845EBA3E20F467D700A7E3F9 /* FlatCacheError.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
