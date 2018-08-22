@@ -9,17 +9,8 @@
 import Foundation
 
 public struct FlatCacheKey: Equatable, Hashable {
-
     let typeName: String
     let id: String
-
-    public static func == (lhs: FlatCacheKey, rhs: FlatCacheKey) -> Bool {
-        return lhs.typeName == rhs.typeName && lhs.id == rhs.id
-    }
-
-    public var hashValue: Int {
-        return typeName.hashValue ^ id.hashValue
-    }
 }
 
 public protocol Identifiable {
