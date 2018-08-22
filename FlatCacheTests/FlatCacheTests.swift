@@ -117,5 +117,12 @@ class FlatCacheTests: XCTestCase {
         XCTAssertEqual(l2.receivedListQueue.count, 0)
         XCTAssertEqual(l2.receivedItemQueue.last?.value, "bar")
     }
+
+    func test_whenClearingCache() {
+        let cache = FlatCache()
+        cache.set(value: CacheModel(id: "1", value: ""))
+        cache.clearCache()
+        XCTAssertNil(cache.get(id: "1") as CacheModel?)
+    }
     
 }

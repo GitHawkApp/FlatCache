@@ -136,5 +136,9 @@ public final class FlatCache {
         return storage[key] as? T
     }
 
+    public func clearCache() {
+        storage = [:]
+    }
+
 }
 
