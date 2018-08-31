@@ -47,6 +47,7 @@ public final class FlatCache {
     public enum Update {
         case item(Any)
         case list([Any])
+        case clear
     }
 
     private var storage: [FlatCacheKey: Any] = [:]
@@ -136,8 +137,14 @@ public final class FlatCache {
         return storage[key] as? T
     }
 
-    public func clearCache() {
+    public func clear() {
         storage = [:]
+
+        for key in listeners.keys {
+            enumerateListeners(key: key) { listener in
+                listener.flatCacheDidUpdate(cache: self, update: .clear)
+            }
+        }
     }
 
 }
