@@ -138,6 +138,8 @@ public final class FlatCache {
     }
 
     public func clear() {
+        assert(Thread.isMainThread)
+        
         storage = [:]
 
         for key in listeners.keys {
