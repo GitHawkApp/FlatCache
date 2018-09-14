@@ -16,11 +16,13 @@ struct CacheModel: Cachable {
 class CacheModelListener: FlatCacheListener {
     var receivedItemQueue = [CacheModel]()
     var receivedListQueue = [[CacheModel]]()
+    var hasCleared = false
 
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
         switch update {
         case .item(let item): receivedItemQueue.append(item as! CacheModel)
         case .list(let list): receivedListQueue.append(list as! [CacheModel])
+        case .clear: hasCleared = true
         }
     }
 }
@@ -116,6 +118,32 @@ class FlatCacheTests: XCTestCase {
         XCTAssertEqual(l2.receivedItemQueue.count, 1)
         XCTAssertEqual(l2.receivedListQueue.count, 0)
         XCTAssertEqual(l2.receivedItemQueue.last?.value, "bar")
+    }
+
+    func test_whenClearingCache() {
+        let cache = FlatCache()
+        cache.set(value: CacheModel(id: "1", value: ""))
+        cache.clear()
+        XCTAssertNil(cache.get(id: "1") as CacheModel?)
+    }
+
+    func test_whenClearing_withListenerForEach_thatListenersReceiveClearUpdates() {
+        let cache = FlatCache()
+        let l1 = CacheModelListener()
+        let l2 = CacheModelListener()
+        let m1 = CacheModel(id: "1", value: "foo")
+        let m2 = CacheModel(id: "2", value: "bar")
+        cache.add(listener: l1, value: m1)
+        cache.add(listener: l2, value: m2)
+        cache.set(values: [m1, m2])
+
+        XCTAssertFalse(l1.hasCleared)
+        XCTAssertFalse(l2.hasCleared)
+
+        cache.clear()
+
+        XCTAssertTrue(l1.hasCleared)
+        XCTAssertTrue(l2.hasCleared)
     }
     
 }
