@@ -5,7 +5,7 @@ Pod::Spec.new do |spec|
   spec.homepage     = 'https://github.com/GitHawkApp/FlatCache'
   spec.authors      = { 'Ryan Nystrom' => 'rnystrom@whoisryannystrom.com' }
   spec.summary      = 'In memory flat cache.'
-  spec.source       = { :git => 'https://github.com/GitHawkApp/FlatCache.git', :tag => '#{s.version}' }
+  spec.source       = { :git => 'https://github.com/GitHawkApp/FlatCache.git', :tag => spec.version.to_s }
   spec.source_files = 'FlatCache/*.swift'
   spec.platform     = :ios, '9.0'
   spec.swift_version = '4.0'
