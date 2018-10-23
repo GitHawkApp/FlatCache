@@ -38,7 +38,7 @@ private extension Cachable {
     }
 }
 
-public protocol FlatCacheListener: class {
+public protocol FlatCacheListener: AnyObject {
     func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update)
 }
 
