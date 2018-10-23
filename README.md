@@ -9,7 +9,7 @@ This is an implementation of [Soroush Khanlou](https://twitter.com/khanlou)'s [T
 Just add `FlatCache` to your Podfile and pod install. Done!
 
 ```
-pod 'ContextMenu'
+pod 'FlatCache'
 ```
 
 ## Usage
