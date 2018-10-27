@@ -9,7 +9,7 @@ This is an implementation of [Soroush Khanlou](https://twitter.com/khanlou)'s [T
 Just add `FlatCache` to your Podfile and pod install. Done!
 
 ```
-pod 'ContextMenu'
+pod 'FlatCache'
 ```
 
 ## Usage
@@ -35,13 +35,13 @@ Now just create a `FlatCache` object and start reading & writing with it.
 ```swift
 let cache = FlatCache()
 let user = User(name: "ryan")
-cache.set(user)
-if let cached = cache.get(user) as User? {
-  print(user.name) // "ryan"
+cache.set(value: user)
+if let cached = cache.get(id: user.id) as User? {
+  print(cached.name) // "ryan"
 }
 ```
 
-> `FlatCache` uses the type information with the `get()` function to lookup the appropriate object. You must type the result somehow.
+> `FlatCache` uses the type information with the `get(id:)` function to lookup the appropriate object. You must type the result somehow.
 
 ### Listeners
 
@@ -68,7 +68,7 @@ func flatCacheDidUpdate(cache: FlatCache, update: FlatCache.Update) {
 }
 ```
 
-> `FlatCache` coalesces so only a single event is delivered when something changes, no matter if an update has just a  a single object or hundreds.
+> `FlatCache` coalesces so only a single event is delivered when something changes, no matter if an update has just a single object or hundreds.
 
 ## Acknowledgements
 
