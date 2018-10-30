@@ -45,7 +45,7 @@ if let cached = cache.get(id: user.id) as User? {
 
 ### Listeners
 
-One of the strengths of `FlatCache` is adding "listeners" to the cache to be notified when an object is changed. This powerful tool let's multiple systems respond to object changes.
+One of the strengths of `FlatCache` is adding "listeners" to the cache to be notified when an object is changed. This powerful tool lets multiple systems respond to object changes.
 
 ```swift
 let cache = FlatCache()
